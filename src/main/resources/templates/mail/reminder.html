@@ -41,18 +41,37 @@
         <tr th:each="item : ${scheduleList}">
           <td style="padding:16px 0; border-bottom:1px solid #eee;">
 
+            <!-- ▼ 終日の場合：背景色つきタイトル ▼ -->
+            <div th:if="${item.allDay}"
+                 th:style="'background-color:' + ${item.baggroundColor}
+                           + '; color:' + ${item.textColor}
+                           + '; padding:6px 12px; border-radius:6px; font-weight:700; margin-bottom:8px;'">
+              <span th:text="${item.title}"></span>
+              <span style="font-size:12px; margin-left:6px;">（終日）</span>
+            </div>
+
+            <!-- ▼ 終日でない場合：背景色ドット付きタイトル ▼ -->
+            <div th:if="${!item.allDay}"
+                 style="color:#333; font-weight:700; margin-bottom:8px; display:flex; align-items:center;">
+
+              <!-- 背景色ドット -->
+              <span th:style="'width:10px; height:10px; background-color:' 
+                              + ${item.baggroundColor}
+                              + '; border-radius:50%; display:inline-block; margin-right:8px;'">
+              </span>
+
+              <span th:text="${item.title}"></span>
+            </div>
+
+            <!-- ▼ 詳細テーブル ▼ -->
             <table width="100%" cellpadding="0" cellspacing="0" style="font-size:14px; color:#333;">
               <tr>
-                <td style="padding:4px 0; color:#777;">タイトル</td>
-                <td style="padding:4px 0; font-weight:600;" th:text="${item.title}"></td>
+                <td style="width:20%; padding:4px 0; color:#777;">日時</td>
+                <td style="width:80%; padding:4px 0; font-weight:600;" th:text="${item.displayTime}"></td>
               </tr>
               <tr>
-                <td style="padding:4px 0; color:#777;">日時</td>
-                <td style="padding:4px 0; font-weight:600;" th:text="${item.datetime}"></td>
-              </tr>
-              <tr>
-                <td style="padding:4px 0; color:#777;">場所</td>
-                <td style="padding:4px 0; font-weight:600;" th:text="${item.place}"></td>
+                <td style="width:20%; padding:4px 0; color:#777;">場所</td>
+                <td style="width:80%; padding:4px 0; font-weight:600;" th:text="${item.place}"></td>
               </tr>
             </table>
 
