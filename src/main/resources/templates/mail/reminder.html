@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ja">
+<body style="margin:0; padding:0; background-color:#f5f2ff; font-family:Segoe UI, sans-serif;">
+
+<table width="100%" cellpadding="0" cellspacing="0" style="background-color:#f5f2ff; padding:24px 0;">
+  <tr>
+    <td align="center">
+
+      <!-- メインカード -->
+      <table width="600" cellpadding="0" cellspacing="0" 
+             style="background-color:#ffffff; border:1px solid #d8d2ff; border-radius:12px; padding:24px;">
+
+        <!-- ヘッダー -->
+        <tr>
+          <td align="center" style="padding-bottom:16px;">
+            <h2 style="margin:0; color:#6a5acd; font-size:22px; font-weight:700;">
+              明日の予定通知
+            </h2>
+          </td>
+        </tr>
+
+        <!-- メッセージ -->
+        <tr>
+          <td style="color:#555; font-size:14px; line-height:1.6; padding-bottom:20px;">
+            <span th:text="${name}"></span> 様<br>
+            明日の予定が複数登録されています。ご確認ください。
+          </td>
+        </tr>
+
+        <!-- ラベル -->
+        <tr>
+          <td style="padding-bottom:12px;">
+            <span style="background-color:#e8e4ff; color:#6a5acd; padding:4px 12px; 
+                         border-radius:20px; font-size:12px; font-weight:600;">
+              予定一覧
+            </span>
+          </td>
+        </tr>
+
+        <!-- ▼▼ 複数予定ループ ▼▼ -->
+        <tr th:each="item : ${scheduleList}">
+          <td style="padding:16px 0; border-bottom:1px solid #eee;">
+
+            <table width="100%" cellpadding="0" cellspacing="0" style="font-size:14px; color:#333;">
+              <tr>
+                <td style="padding:4px 0; color:#777;">タイトル</td>
+                <td style="padding:4px 0; font-weight:600;" th:text="${item.title}"></td>
+              </tr>
+              <tr>
+                <td style="padding:4px 0; color:#777;">日時</td>
+                <td style="padding:4px 0; font-weight:600;" th:text="${item.datetime}"></td>
+              </tr>
+              <tr>
+                <td style="padding:4px 0; color:#777;">場所</td>
+                <td style="padding:4px 0; font-weight:600;" th:text="${item.place}"></td>
+              </tr>
+            </table>
+
+          </td>
+        </tr>
+        <!-- ▲▲ 複数予定ループ ▲▲ -->
+
+        <!-- ボタン -->
+        <tr>
+          <td align="center" style="padding-top:24px;">
+            <a href="#"
+               style="display:inline-block; background-color:#6a5acd; color:#ffffff; 
+                      padding:12px 24px; border-radius:30px; text-decoration:none; 
+                      font-size:14px; font-weight:600;">
+              カレンダーを開く
+            </a>
+          </td>
+        </tr>
+
+        <!-- フッター -->
+        <tr>
+          <td align="center" style="padding-top:24px; font-size:12px; color:#8a86a3;">
+            ※このメールはシステムから自動送信されています。
+          </td>
+        </tr>
+
+      </table>
+      <!-- メインカードここまで -->
+
+    </td>
+  </tr>
+</table>
+
+</body>
+</html>
