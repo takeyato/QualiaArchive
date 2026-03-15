@@ -13,29 +13,29 @@ public class ScheduleItem {
     /** 予定のタイトル */
     private String title;
     /** 予定の開始日時 */
-    private LocalDateTime start;
+    private LocalDateTime start_at;
     /** 予定の終了日時 */
-    private LocalDateTime end;
+    private LocalDateTime end_at;
     /** 予定の場所 */
     private String place;
     /** 予定の背景色（例: "#FF0000"）*/
-    private String baggroundColor;
+    private String backgroundcolor;
 
     /** コンストラクタ */
-    public ScheduleItem(String title, LocalDateTime start, LocalDateTime end, String place, String baggroundColor) {
+    public ScheduleItem(String title, LocalDateTime start_at, LocalDateTime end_at, String place, String backgroundcolor) {
         this.title = title;
-        this.start = start;
-        this.end = end;
+        this.start_at = start_at;
+        this.end_at = end_at;
         this.place = place; 
-        this.baggroundColor = baggroundColor;
+        this.backgroundcolor = backgroundcolor;
     }
 
     // ★ 終日判定ロジック
     public boolean isAllDay() {
-        return start.toLocalTime().equals(LocalTime.MIDNIGHT)
-            && end.toLocalTime().equals(LocalTime.MIDNIGHT)
-            && (end.toLocalDate().isEqual(start.toLocalDate().plusDays(1))
-                || end.toLocalDate().isEqual(start.toLocalDate()));
+        return start_at.toLocalTime().equals(LocalTime.MIDNIGHT)
+            && end_at.toLocalTime().equals(LocalTime.MIDNIGHT)
+            && (end_at.toLocalDate().isEqual(start_at.toLocalDate().plusDays(1))
+                || end_at.toLocalDate().isEqual(start_at.toLocalDate()));
     }
 
     /** 表示用の時間 */
@@ -43,7 +43,7 @@ public class ScheduleItem {
         if (isAllDay()) {
             return "終日";
         }
-        return start.toLocalTime() + "〜" + end.toLocalTime();
+        return start_at.toLocalTime() + "〜" + end_at.toLocalTime();
     }
     
     /**
@@ -51,14 +51,14 @@ public class ScheduleItem {
      * @return
      */
     public String getTextColor() {
-        if (baggroundColor == null || !baggroundColor.startsWith("#") || baggroundColor.length() != 7) {
+        if (backgroundcolor == null || !backgroundcolor.startsWith("#") || backgroundcolor.length() != 7) {
             return "#000000"; // デフォルト黒
         }
 
         // #RRGGBB を RGB に変換
-        int r = Integer.parseInt(baggroundColor.substring(1, 3), 16);
-        int g = Integer.parseInt(baggroundColor.substring(3, 5), 16);
-        int b = Integer.parseInt(baggroundColor.substring(5, 7), 16);
+        int r = Integer.parseInt(backgroundcolor.substring(1, 3), 16);
+        int g = Integer.parseInt(backgroundcolor.substring(3, 5), 16);
+        int b = Integer.parseInt(backgroundcolor.substring(5, 7), 16);
 
         // 相対輝度（WCAG 準拠）
         double luminance = (0.299 * r + 0.587 * g + 0.114 * b);
