@@ -43,7 +43,7 @@ public class ReminderController {
 
             
             mailService.sendReminderMail(
-                    "test@gmail.com",
+                    "taketake1568@gmail.com",
                     "【リマインド】明日の予定一覧",
                     list
             );
@@ -72,7 +72,7 @@ public class ReminderController {
 
             
             mailService.sendReminderMail(
-                    "test@gmail.com",
+                    "taketake1568@gmail.com",
                     "【リマインド】明日の予定一覧",
                     list
             );

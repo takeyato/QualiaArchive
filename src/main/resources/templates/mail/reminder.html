@@ -43,7 +43,7 @@
 
             <!-- ▼ 終日の場合：背景色つきタイトル ▼ -->
             <div th:if="${item.allDay}"
-                 th:style="'background-color:' + ${item.baggroundColor}
+                 th:style="'background-color:' + ${item.backgroundcolor}
                            + '; color:' + ${item.textColor}
                            + '; padding:6px 12px; border-radius:6px; font-weight:700; margin-bottom:8px;'">
               <span th:text="${item.title}"></span>
@@ -56,7 +56,7 @@
 
               <!-- 背景色ドット -->
               <span th:style="'width:10px; height:10px; background-color:' 
-                              + ${item.baggroundColor}
+                              + ${item.backgroundcolor}
                               + '; border-radius:50%; display:inline-block; margin-right:8px;'">
               </span>
 
