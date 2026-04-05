@@ -1,0 +1,169 @@
+body {
+    background: linear-gradient(135deg, #f0f0f0, #e4e4e4);
+    font-family: "Segoe UI", sans-serif;
+    padding-bottom: 90px;
+}
+
+h4 {
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: #333;
+}
+
+.employee-card {
+    border-radius: 16px;
+    color: white;
+    padding: 16px;
+    border: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(4px);
+    transition: transform 0.2s ease, background-color 0.5s ease;
+}
+
+.employee-card:hover {
+    transform: translateY(-3px);
+}
+
+.break-card {
+    border-radius: 16px;
+    padding: 16px;
+    background: rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(10px);
+    border-left: 6px solid #28a745;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.10);
+}
+
+.emoji-icon {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 70px;
+    height: 70px;
+    font-size: 2.6rem;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.35);
+    backdrop-filter: blur(6px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    margin-right: 14px;
+}
+
+.bottom-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: white;
+    border-top: 1px solid #ccc;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+/* ▼▼▼ Refresh Pass アニメーション ▼▼▼ */
+.modal-pass {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+}
+
+.ticket-wrapper {
+    width: 200px;
+    height: 200px;
+    position: relative;
+    margin: 0 auto;
+}
+
+/* 上半分 */
+.ticket-left {
+    width: 200px;
+    height: 100px;
+    background-image: url('/img/refresh-pass.png');
+    background-size: 200px 200px;
+    background-position: top;
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 0;
+    opacity: 0;
+}
+
+/* 下半分 */
+.ticket-right {
+    width: 200px;
+    height: 100px;
+    background-image: url('/img/refresh-pass.png');
+    background-size: 200px 200px;
+    background-position: bottom;
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 100px;
+    opacity: 0;
+}
+
+/* 横カットライン */
+.cut-line {
+    position: absolute;
+    left: 0;
+    top: 95px;
+    width: 100%;
+    height: 4px;
+    background: repeating-linear-gradient(
+        to right,
+        #ef4444 0px,
+        #ef4444 8px,
+        transparent 8px,
+        transparent 16px
+    );
+    opacity: 0;
+}
+
+@keyframes cutMove {
+    0% { opacity: 0; }
+    20% { opacity: 1; }
+    100% { opacity: 1; }
+}
+
+/* パス出現 */
+@keyframes ticketAppear {
+    0% { opacity: 0; transform: scale(0.9); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+/* 上下に割れる */
+@keyframes ticketSplitTop {
+    0% { transform: translateY(0); opacity: 1; }
+    100% { transform: translateY(-140px) rotate(-3deg); opacity: 0; }
+}
+
+@keyframes ticketSplitBottom {
+    0% { transform: translateY(0); opacity: 1; }
+    100% { transform: translateY(140px) rotate(3deg); opacity: 0; }
+}
+
+/* 紙吹雪 */
+.confetti-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+    opacity: 0;
+}
+
+.confetti {
+    position: absolute;
+    width: 8px;
+    height: 12px;
+    background: red;
+    opacity: 0;
+    animation: confettiFall 1.5s ease-out forwards;
+}
+
+@keyframes confettiFall {
+    0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(200px) rotate(360deg); opacity: 0; }
+}

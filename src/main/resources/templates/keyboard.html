@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Keyboard Sound - No Overlap</title>
+
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+	<style>
+		body {
+			background: #111;
+			color: #fff;
+			text-align: center;
+			padding-top: 40px;
+		}
+
+		.key-block {
+			width: 80px;
+		}
+
+		.key {
+			width: 60px;
+			height: 60px;
+			font-size: 20px;
+		}
+
+		.sound-label {
+			font-size: 12px;
+			color: #0ff;
+			margin-top: 4px;
+			min-height: 20px;
+		}
+	</style>
+</head>
+
+<body>
+
+	<h2 class="mb-4">Bootstrap Keyboard × myinstants</h2>
+
+	<div class="container" id="keyboard"></div>
+
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+	<script>
+
+		// ▼ 効果音をここに追加するだけ
+		const soundMap = {
+			Q: "https://www.myinstants.com/media/sounds/bao-fa-2.mp3",
+			W: "https://www.myinstants.com/media/sounds/huh_37bAoRo.mp3",
+			E: "https://www.myinstants.com/media/sounds/money-soundfx.mp3",
+			R: "https://www.myinstants.com/media/sounds/musuka-shi-jian-da.mp3",
+
+			Y: "https://www.myinstants.com/media/sounds/mario-1up.mp3",
+			U: "https://www.myinstants.com/media/sounds/yoshi-tongue.mp3",
+			I: "https://www.myinstants.com/media/sounds/gukii-xiao-guo-yin.mp3",
+			O: "https://www.myinstants.com/media/sounds/anime-wow-sound-effect.mp3",
+
+			
+			A: "https://www.myinstants.com/media/sounds/ziyoziyo1.mp3",
+			S: "https://www.myinstants.com/media/sounds/fsdfsdfsdfsd.mp3",
+			D: "https://www.myinstants.com/media/sounds/jojos-golden-wind_kL2WElB.mp3",
+			F: "https://www.myinstants.com/media/sounds/pokemon-battle.mp3",
+			G: "https://www.myinstants.com/media/sounds/megarobania1.mp3",
+			
+			L: "https://www.myinstants.com/media/sounds/final-fantasy-v-music-victory-fanfare.mp3",
+			
+			Z: "https://www.myinstants.com/media/sounds/kids_cheering.mp3",
+			X: "https://www.myinstants.com/media/sounds/mao-mimu-nu-ru.mp3",
+			C: "https://www.myinstants.com/media/sounds/bei-shiitoranpetsuto.mp3",
+			
+			N: "https://www.myinstants.com/media/sounds/correct-answer-button.mp3",
+			M: "https://www.myinstants.com/media/sounds/jeopardy-incorrect-answer.mp3"
+			
+		};
+
+		// ▼ Audio オブジェクトをキーごとに1つだけ作る
+		const audioPool = {};
+
+		for (const key in soundMap) {
+			audioPool[key] = new Audio(soundMap[key]);
+		}
+
+		// ▼ URL からタイトルを自動生成
+		function generateTitleFromUrl(url) {
+			let name = url.split('/').pop().replace('.mp3', '');
+			name = name.replace(/[-_]/g, ' ');
+			name = name.replace(/\s+/g, ' ');
+			return name.replace(/\b\w/g, c => c.toUpperCase());
+		}
+
+		// ▼ キーボードを自動生成
+		function buildKeyboard() {
+			const rows = [
+				"QWERTYUIOP",
+				"ASDFGHJKL",
+				"ZXCVBNM"
+			];
+
+			let html = "";
+
+			rows.forEach(row => {
+				html += `<div class="row justify-content-center g-3 mb-3">`;
+				[...row].forEach(key => {
+					const title = soundMap[key] ? generateTitleFromUrl(soundMap[key]) : "";
+					html += `
+        <div class="col-auto key-block" data-key="${key}">
+          <button class="key btn btn-outline-light">${key}</button>
+          <div class="sound-label">${title}</div>
+        </div>
+      `;
+				});
+				html += `</div>`;
+			});
+
+			$("#keyboard").html(html);
+		}
+
+		// ▼ 同時再生しないように制御して再生
+		function playSound(key) {
+		  const audio = audioPool[key];
+		  if (!audio) return;
+
+		  // ★ 他の効果音もすべて止める
+		  stopAllSounds();
+
+		  audio.play();
+
+		  const $btn = $(`.key-block[data-key="${key}"] .key`);
+		  $btn.addClass("btn-warning");
+		  setTimeout(() => $btn.removeClass("btn-warning"), 150);
+		}
+		
+		function stopAllSounds() {
+		  for (const key in audioPool) {
+		    const audio = audioPool[key];
+		    audio.pause();
+		    audio.currentTime = 0;
+		  }
+		}
+
+		$(function () {
+
+			buildKeyboard();
+
+			// クリック
+			$(document).on("mousedown", ".key", function () {
+				const key = $(this).parent().data("key");
+				playSound(key);
+			});
+
+			// キーボード入力
+			$(document).on("keydown", function (e) {
+				const key = e.key.toUpperCase();
+				playSound(key);
+			});
+
+		});
+	</script>
+
+</body>
+
+</html>
